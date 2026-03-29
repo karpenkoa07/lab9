@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Места работы и стаж</title>
+</head>
+<body>
+    <img src="{{ url_for('static', filename='meme.png') }}" class="meme">
+
+    <style>
+    .meme {
+        position: fixed;
+        right: 20px;   /* справа */
+        top: 50%;
+        transform: translateY(-50%);
+        width: 400px;
+    }
+</style>
+
+    <form method="POST">
+        <input type="text" name="company" placeholder="Компания" required>
+        <input type="number" name="term" placeholder="Срок работы" required>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h3>Всего: {{ total_term }}</h3>
+
+    {% for job in jobs %}
+        <p>
+            {{ job.company }} — {{ job.term }}
+            <form method="POST" action="/delete/{{ job.id }}" style="display:inline;">
+                <button type="submit">Удалить</button>
+            </form>
+        </p>
+    {% endfor %}
+
+    <form method="POST" action="/clear">
+        <button type="submit">Очистить всё</button>
+    </form>
+</body>
+</html>
